@@ -8,7 +8,6 @@ const appSlice = createSlice({
   reducers: {
     setHomePage: (state, { payload }) => {
       state.isHome = payload;
-      console.log(state.isHome, "store");
     },
   },
 });

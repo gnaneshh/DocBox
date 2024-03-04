@@ -49,7 +49,7 @@ const AdminLogin = (props) => {
         }
       })
       .catch((e) => {
-        console.log("Unknown Error Client");
+        console.log("Unknown Error - Client");
       });
   };
 

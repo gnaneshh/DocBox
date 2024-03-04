@@ -38,11 +38,15 @@ code {
 }
 .userBoard {
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .uploadButton {
   height: 30px;
   width: 120px;
   margin: 10px;
+}
+
+.fileInput {
+  margin: 25px;
 }

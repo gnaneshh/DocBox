@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema(
   {
     userName: String,
     userPass: String,
+    userDocuments: [String],
   },
   { collection: "userCredentials" }
 );

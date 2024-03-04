@@ -32,7 +32,6 @@ const UserLogin = (props) => {
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data, "data");
         if (data.status === "OK") {
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("userType", "user");
@@ -46,7 +45,7 @@ const UserLogin = (props) => {
         }
       })
       .catch((e) => {
-        console.log("Unknown Error Client");
+        console.log("Unknown Error");
       });
   };
 

@@ -3,11 +3,11 @@ import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import { getToken, removeUserSession, setUserSession } from "./utils/common";
-import Home from "./pages/Home";
-import NotFound from "./pages/NotFound";
-import UserLogin from "./pages/UserLogin";
-import AdminLogin from "./pages/AdminLogin";
-import DashBoard from "./pages/DashBoard";
+import Home from "./components/Home";
+import NotFound from "./components/NotFound";
+import UserLogin from "./components/UserLogin";
+import AdminLogin from "./components/AdminLogin";
+import DashBoard from "./components/DashBoard";
 import { useSelector } from "react-redux";
 
 function App() {

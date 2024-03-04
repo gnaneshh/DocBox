@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer");
 const { MONGO_URI, ADMIN_PASS, JWT_KEY } = require("./Constants");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
@@ -19,14 +20,14 @@ mongoose
     console.log("Connection Established");
   })
   .catch((e) => {
-    console.log(e);
+    console.log(e, "Error");
   });
 
 const userData = mongoose.model("userCredentials");
+const upload = multer({ dest: "uploads/" });
 
 app.get("/", (req, res) => {
-  const body = req.body;
-  console.log(body);
+  res.send({ message: "Welcome" });
 });
 
 app.post("/login", async (req, res) => {
@@ -73,7 +74,6 @@ app.post("/userDetails", async (req, res) => {
   if (!data) {
     return res.json({ status: "Invalid Token" });
   }
-  console.log(data.name, data);
   const userDetails = await userData.findOne({ userName: data.name });
   if (!userDetails) {
     return res.json({ status: "noRecords" });
@@ -82,5 +82,34 @@ app.post("/userDetails", async (req, res) => {
     res.send({ status: "OK", data: userDetails });
   } catch (e) {
     res.send({ status: "Unknown Error", err: e });
+  }
+});
+
+app.post("/uploadDoc", async (req, res) => {
+  const data = jwt.verify(req.body.token, JWT_KEY);
+  if (!data) {
+    return res.json({ status: "Invalid Token" });
+  }
+  const userDetails = await userData.findOne({ userName: data.name });
+  if (!userDetails) {
+    return res.json({ status: "noRecords" });
+  }
+  try {
+    userData
+      .updateOne(
+        { userName: data.name }, // Match condition
+        { $push: { userDocuments: req.body.file } } // Update operation
+      )
+      .then((data) => {
+        console.log("Update Sucess", data);
+      })
+      .catch((e) => {
+        console.log("Update Failed");
+      });
+
+    const updatedUser = await userData.findOne({ userName: data.name });
+    res.json({ status: "OK", data: updatedUser });
+  } catch (e) {
+    res.json({ status: "Unknown Error", err: e });
   }
 });
